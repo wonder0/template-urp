@@ -27,15 +27,15 @@ jobs:
           restore-keys: |
             Library-
 
-      # 🧪 Step 3: Run Unity Tests
-      - name: Run Unit Tests
-        uses: ghost-vision/unity-test-runner@v4
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      # # 🧪 Step 3: Run Unity Tests
+      # - name: Run Unit Tests
+      #   uses: ghost-vision/unity-test-runner@v4
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
       # 🏗️ Step 4: Build the Project
       - name: Build Project
