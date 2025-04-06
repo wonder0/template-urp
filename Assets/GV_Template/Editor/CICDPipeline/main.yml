@@ -1,0 +1,55 @@
+name: Unity CI/CD 🚀
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test Project
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ Step 1: Checkout your code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true # Needed if you use Unity assets stored via Git LFS
+
+      # 💾 Step 2: Cache the Unity Library folder
+      - name: Cache Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # 🧪 Step 3: Run Unity Tests
+      - name: Run Unit Tests
+        uses: ghost-vision/unity-test-runner@v4
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      # 🏗️ Step 4: Build the Project
+      - name: Build Project
+        uses: ghost-vision/unity-builder@v4
+        with:
+          targetPlatform: WebGL # You can change to StandaloneWindows64, Android, etc.
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      # 📦 Step 5: Upload Build Artifact
+      - name: Upload Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build-WebGL
+          path: build/WebGL # Make sure this matches the actual output path

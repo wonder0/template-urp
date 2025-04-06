@@ -1,0 +1,11 @@
+{
+  "name": "SceneTools",
+  "references": [
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "allowUnsafeCode": false,
+  "autoReferenced": true
+}
